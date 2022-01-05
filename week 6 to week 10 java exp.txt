@@ -1,0 +1,217 @@
+Week 6 
+Write a java program to create an abstract class named Shape that contains an empty method 
+named number of Sides ( ).Provide three classes named Trapezoid, Triangle and Hexagon such that 
+each one of the classes extends the class Shape. Each one of the classes contains.
+ShapeDemo.java
+import javax.swing.*;
+abstract class Shape
+{
+public abstract void numberOfSides();
+}
+class Trapezoid extends Shape
+{
+public void numberOfSides()
+{
+JOptionPane.showMessageDialog(null,"TRAPEZOID -- Number of sides in trapezoid is 4 (Of which 
+two are parallel and with no angles)");
+}
+}
+class Triangle extends Shape
+{
+public void numberOfSides()
+{
+JOptionPane.showMessageDialog(null,"TRIANGLE -- Number of sides in Triangle is 3 ");
+}
+}
+class Hexagon extends Shape
+{
+public void numberOfSides()
+{
+JOptionPane.showMessageDialog(null,"HEXAGON -- Number of sides in Hexagon is 6 ");
+}
+}
+class ShapeDemo
+{ 
+public static void main(String[] args)
+{
+JOptionPane.showMessageDialog(null,"Some of the Geometrical figures are as follows " );
+Trapezoid t=new Trapezoid();
+Triangle tg=new Triangle();
+Hexagon h=new Hexagon();
+t.numberOfSides();
+tg.numberOfSides();
+h.numberOfSides();
+}
+}
+Week 7 
+a) Write a java program to implement interface using lambda expressions. 
+b) Write a Java Program to implement comparator using lambda expressions. 
+c) Write a Java Program to illustrate the iteration of enumeration elements.
+(a)
+RunnableLambdaTest.java
+public class RunnableLambdaTest {
+ public static void main(String[] args) {
+ Runnable r1 = new Runnable() {
+ @Override
+ public void run() { // anonymous class
+System.out.println("Runnable with Anonymous Class");
+ }
+ };
+ Runnable r2 = () -> { // lambda expression
+System.out.println("Runnable with Lambda Expression");
+ };
+ new Thread(r1).start();
+ new Thread(r2).start();
+ }
+}
+(b)
+A lambda expression is an anonymous method and doesn't execute on its own in java. 
+Instead, it is used to implement a method defined by the functional interface. A lambda 
+expression used with any functional interface and Comparator is a functional interface. 
+The Comparator interface has used when sorting a collection of objects compared with 
+each other.
+LambdaComparatorTest.java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+class Employee {
+int id;
+ String name;
+ double salary;
+ public Employee(int id, String name, double salary) {
+ super();
+ this.id = id;
+ this.name = name;
+this.salary = salary;
+ }
+}
+public class LambdaComparatorTest {
+public static void main(String[] args) {
+ List<Employee> list = new ArrayList<Employee>();
+ // Adding employees
+list.add(new Employee(115, "Adithya", 25000.00));
+list.add(new Employee(125, "Jai", 30000.00));
+list.add(new Employee(135, "Chaitanya", 40000.00));
+System.out.println("Sorting the employee list based on the name");
+ // implementing lambda expression
+Collections.sort(list, (p1, p2) -> {
+ return p1.name.compareTo(p2.name); 
+ }); 
+ for(Employee e : list) {
+System.out.println(e.id + " " + e.name + " " + e.salary);
+ }
+ }
+}
+(c)Write a Java Program to illustrate the iteration of enumeration elements.
+enum games 
+ {
+ludo, Chess, Badminton, Cricket;
+ }
+public class C { 
+ public static void main(String[] args) { 
+ /*
+ * used forEach loop and stored the value in "index"
+ * and printed the value of each enumerator
+ */
+System.out.println("Using for each loop");
+ for (games index:games.values()) {
+System.out.println(index);
+ }
+ }
+}
+Week 8
+Create an enumeration called Players that have some names and runs scored. Create a constructor 
+and a method that will return the number of runs scored by each player or enumerator or enum 
+constant. Using values () method to iterate the enumerator and display the number of runs scored 
+by each player.
+ /*
+ * Created enumeration players with the field.
+ * Declared a constructor and a method to return
+ * the number of runs scored by the players.
+ */
+enum players {
+dravid(10889), 
+sachin(18426), 
+ganguly(11363), 
+virat(11867), 
+dhoni(10773)
+ ;
+ private int runs; 
+ players(int r) {
+ runs = r;
+ } 
+intgetRuns() {
+ return runs;
+ }
+}
+ /*
+ * Used values() method to get the enumerators and a for each loop
+ * to get the number of runs scored by each player 
+ */
+ public class B {
+ public static void main(String args[]) {
+ for (players a : players.values())
+System.out.println(a + " has scored " + a.getRuns() + "ODI runs");
+ }
+}
+Week 9
+In a given string, find the first non-repeating character .You are given a string, that can contain 
+repeating characters. Your task is to return the first character in this string that does not repeat. i.e., 
+occurs exactly once. The string will contain characters only from English alphabet set, i.e., ('A' - 'Z') 
+and ('a' - 'z'). If there is no non-repeating character print the first character of string.
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+class GFG
+{
+/* The function returns index
+of the first non-repeating
+character in a string. If
+all characters are repeating
+then returns INT_MAX */
+static int firstNonRepeating(String str)
+{
+int NO_OF_CHARS = 256;
+// Initialize all characters
+// as absent.
+int arr[] = new int[NO_OF_CHARS];
+for (int i = 0;
+i < NO_OF_CHARS; i++)
+arr[i] = -1;
+// After below loop, the
+// value of arr[x] is going
+// to be index of x if x
+// appears only once. Else
+// the value is going to be
+// either -1 or -2.
+for (int i = 0;
+i < str.length(); i++)
+{
+if (arr[str.charAt(i)] == -1)
+arr[str.charAt(i)] = i;
+else
+arr[str.charAt(i)] = -2;
+}
+int res = Integer.MAX_VALUE;
+for (int i = 0; i < NO_OF_CHARS; i++)
+// If this character occurs
+// only once and appears before
+// the current result, then
+// update the result
+if (arr[i] >= 0)
+res = Math.min(res, arr[i]);
+return res;
+}
+// Driver Code
+public static void main(String args[])
+{
+String str = "Sri Venkateswara College of Engineering and Technology";
+int index = firstNonRepeating(str);
+if (index == Integer.MAX_VALUE)
+System.out.print("Either all characters are " +
+"repeating or string is empty");
+else
+System.out.print("First non-repeating character"+
+" is " + str.charAt(index));
+}
+}
